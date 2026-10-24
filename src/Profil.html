@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-[#0d1117]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pengguna - DoneQuest</title>
+    <!-- Pastikan file CSS hasil compile Tailwind sudah terhubung dengan benar -->
+    <link rel="stylesheet" href="./output.css">
+</head>
+<body class="min-h-full font-sans text-gray-200">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-[#161b22] border-b border-gray-800 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex items-center space-x-8">
+            <span class="text-xl font-bold text-yellow-500 tracking-wider">DoneQuest</span>
+            <div class="flex space-x-6 text-sm font-medium text-gray-400">
+                <a href="#" class="hover:text-white">Dashboard</a>
+                <a href="#" class="hover:text-white">Quest Saya</a>
+                <a href="#" class="hover:text-white">Leaderboard</a>
+                <a href="#" class="hover:text-white">Teman</a>
+                <a href="#" class="text-white border-b-2 border-yellow-500 pb-4 -mb-4">Profil</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-5xl mx-auto px-4 py-8 space-y-6">
+
+        <!-- HEADER USER PROFIL -->
+        <section class="bg-[#161b22] rounded-xl p-6 border border-gray-800 flex items-center justify-between">
+            <div class="flex items-center space-x-6">
+                <!-- Avatar Lingkaran -->
+                <div class="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center text-[#0d1117] font-bold text-2xl tracking-wide">
+                    NP
+                </div>
+                <!-- Nama & Level -->
+                <div>
+                    <h1 class="text-2xl font-bold text-white tracking-wide">@namapengguna</h1>
+                    <p class="text-sm text-gray-400 mt-1">Level 12 &bull; Explorer &bull; Total 2.840 XP</p>
+                </div>
+            </div>
+            <!-- Streak Kanan -->
+            <div class="text-right">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Streak saat ini</p>
+                <p class="text-3xl font-extrabold text-white mt-1">7 hari</p>
+            </div>
+        </section>
+
+        <!-- STATISTIK UTAMA (4 KOLOM) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-[#161b22] border border-gray-800 p-5 rounded-xl">
+                <p class="text-xs text-gray-400 font-medium">Quest selesai</p>
+                <p class="text-2xl font-bold text-white mt-2">128</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-[#161b22] border border-gray-800 p-5 rounded-xl">
+                <p class="text-xs text-gray-400 font-medium">XP minggu ini</p>
+                <p class="text-2xl font-bold text-white mt-2">940</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-[#161b22] border border-gray-800 p-5 rounded-xl">
+                <p class="text-xs text-gray-400 font-medium">Tingkat penyelesaian</p>
+                <p class="text-2xl font-bold text-white mt-2">82%</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="bg-[#161b22] border border-gray-800 p-5 rounded-xl">
+                <p class="text-xs text-gray-400 font-medium">Streak terpanjang</p>
+                <p class="text-2xl font-bold text-white mt-2">12 hari</p>
+            </div>
+        </section>
+
+        <!-- GRAFIK MINGGUAN (XP PER HARI) -->
+        <section class="bg-[#161b22] border border-gray-800 rounded-xl p-6">
+            <h2 class="text-sm font-semibold text-white tracking-wide mb-8">XP per hari (7 hari terakhir)</h2>
+            <!-- Wrapper Grafik Batang -->
+            <div class="flex items-end justify-between max-w-3xl mx-auto h-48 px-4 border-b border-gray-800 pb-2">
+                <!-- Senin -->
+                <div class="flex flex-col items-center flex-1 group">
+                    <span class="text-xs text-gray-400 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">120</span>
+                    <div class="w-8 sm:w-12 bg-yellow-500 rounded-t-md transition-all duration-500" style="height: 57%;"></div>
+                    <span class="text-xs text-gray-400 mt-2">Sen</span>
+                </div>
+                <!-- Selasa -->
+                <div class="flex flex-col items-center flex-1 group">
+                    <span class="text-xs text-gray-400 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">180</span>
+                    <div class="w-8 sm:w-12 bg-yellow-500 rounded-t-md transition-all duration-500" style="height: 85%;"></div>
+                    <span class="text-xs text-gray-400 mt-2">Sel</span>
+                </div>
+                <!-- Rabu -->
+                <div class="flex flex-col items-center flex-1 group">
+                    <span class="text-xs text-gray-400 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">75</span>
+                    <div class="w-8 sm:w-12 bg-yellow-500 rounded-t-md transition-all duration-500" style="height: 35%;"></div>
+                    <span class="text-xs text-gray-400 mt-2">Rab</span>
+                </div>
+                <!-- Kamis -->
+                <div class="flex flex-col items-center flex-1 group">
+                    <span class="text-xs text-gray-400 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">210</span>
+                    <div class="w-8 sm:w-12 bg-yellow-500 rounded-t-md transition-all duration-500" style="height: 100%;"></div>
+                    <span class="text-xs text-gray-400 mt-2">Kam</span>
+                </div>
+                <!-- Jumat -->
+                <div class="flex flex-col items-center flex-1 group">
+                    <span class="text-xs text-gray-400 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">150</span>
+                    <div class="w-8 sm:w-12 bg-yellow-500 rounded-t-md transition-all duration-500" style="height: 71%;"></div>
+                    <span class="text-xs text-gray-400 mt-2">Jum</span>
+                </div>
+                <!-- Sabtu -->
+                <div class="flex flex-col items-center flex-1 group">
+                    <span class="text-xs text-gray-400 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">205</span>
+                    <div class="w-8 sm:w-12 bg-yellow-500 rounded-t-md transition-all duration-500" style="height: 97%;"></div>
+                    <span class="text-xs text-gray-400 mt-2">Sab</span>
+                </div>
+                <!-- Minggu -->
+                <div class="flex flex-col items-center flex-1 group">
+                    <span class="text-xs text-gray-400 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">180</span>
+                    <div class="w-8 sm:w-12 bg-yellow-500 rounded-t-md transition-all duration-500" style="height: 85%;"></div>
+                    <span class="text-xs text-gray-400 mt-2">Min</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- KOLEKSI ACHIEVEMENT -->
+        <section class="bg-[#161b22] border border-gray-800 rounded-xl p-6">
+            <h2 class="text-sm font-semibold text-white tracking-wide mb-6">Koleksi achievement</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- Bintang 1 (Aktif) -->
+                <div class="bg-[#1c2128] border border-gray-800 p-4 rounded-xl flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-500/10 border border-yellow-500/30 rounded-full flex items-center justify-center text-yellow-500 text-lg">★</div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">7 Day Streak</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Streak 7 hari</p>
+                    </div>
+                </div>
+
+                <!-- Bintang 2 (Aktif) -->
+                <div class="bg-[#1c2128] border border-gray-800 p-4 rounded-xl flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-500/10 border border-yellow-500/30 rounded-full flex items-center justify-center text-yellow-500 text-lg">★</div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">Early Bird</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Quest di pagi hari</p>
+                    </div>
+                </div>
+
+                <!-- Bintang 3 (Aktif) -->
+                <div class="bg-[#1c2128] border border-gray-800 p-4 rounded-xl flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-500/10 border border-yellow-500/30 rounded-full flex items-center justify-center text-yellow-500 text-lg">★</div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">Bookworm</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Quest membaca</p>
+                    </div>
+                </div>
+
+                <!-- Bintang 4 (Aktif) -->
+                <div class="bg-[#1c2128] border border-gray-800 p-4 rounded-xl flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-500/10 border border-yellow-500/30 rounded-full flex items-center justify-center text-yellow-500 text-lg">★</div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">Fitness Starter</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Quest olahraga</p>
+                    </div>
+                </div>
+
+                <!-- Bintang 5 (Terkunci) -->
+                <div class="bg-[#1c2128]/50 border border-gray-800/60 p-4 rounded-xl flex items-center space-x-4 opacity-50">
+                    <div class="w-10 h-10 bg-gray-800 border border-gray-700 rounded-full flex items-center justify-center text-gray-500 text-lg">🔒</div>
+                    <div>
