@@ -65,15 +65,15 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Daily Quests</h1>
-          <button id="openModalBtn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-5 py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20 active:scale-95 flex items-center justify-center gap-1.5">
+          <a href="quest.html" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-5 py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20 active:scale-95 flex items-center justify-center gap-1.5">
             <span class="text-lg leading-none">+</span> Buat Custom Quest
-          </button>
+          </a>
         </div>
 
         <!-- Progress Summary -->
         <div class="mb-6">
           <p id="dailyProgressText" class="text-xs sm:text-sm text-gray-400 font-medium mb-2.5">
-            3 dari 4 quest selesai hari ini · <span class="text-amber-400">+180 XP</span>
+            3 dari 6 quest selesai hari ini · <span class="text-amber-400">+180 XP</span>
           </p>
           <div class="w-full bg-[#1e293b] rounded-full h-3 overflow-hidden p-0.5">
             <div id="dailyProgressBar" class="bg-amber-500 h-2 rounded-full transition-all duration-500 ease-out" style="width: 75%;"></div>
@@ -82,55 +82,8 @@
 
         <!-- Quest Cards List -->
         <div id="questList" class="space-y-3.5 mb-8">
-          <!-- Item 1 -->
-          <div class="quest-item bg-[#192338] hover:bg-[#1e2b45] transition-colors rounded-xl p-4 sm:p-4.5 flex items-center justify-between border border-gray-800/60 cursor-pointer" onclick="toggleQuest(0)">
-            <div class="flex items-center space-x-4">
-              <input type="checkbox" checked onclick="event.stopPropagation(); toggleQuest(0)" class="quest-checkbox w-5 h-5 accent-amber-500 rounded cursor-pointer">
-              <div>
-                <h3 class="quest-title font-semibold text-gray-200 text-sm sm:text-base line-through text-gray-400">Read 20 pages</h3>
-                <p class="text-xs text-gray-400 mt-0.5">Reading · Harian</p>
-              </div>
-            </div>
-            <span class="quest-xp font-bold text-amber-500 text-sm sm:text-base">+50 XP</span>
-          </div>
-
-          <!-- Item 2 -->
-          <div class="quest-item bg-[#192338] hover:bg-[#1e2b45] transition-colors rounded-xl p-4 sm:p-4.5 flex items-center justify-between border border-gray-800/60 cursor-pointer" onclick="toggleQuest(1)">
-            <div class="flex items-center space-x-4">
-              <input type="checkbox" checked onclick="event.stopPropagation(); toggleQuest(1)" class="quest-checkbox w-5 h-5 accent-amber-500 rounded cursor-pointer">
-              <div>
-                <h3 class="quest-title font-semibold text-gray-200 text-sm sm:text-base line-through text-gray-400">Exercise 30 min</h3>
-                <p class="text-xs text-gray-400 mt-0.5">Fitness · Harian</p>
-              </div>
-            </div>
-            <span class="quest-xp font-bold text-amber-500 text-sm sm:text-base">+100 XP</span>
-          </div>
-
-          <!-- Item 3 -->
-          <div class="quest-item bg-[#192338] hover:bg-[#1e2b45] transition-colors rounded-xl p-4 sm:p-4.5 flex items-center justify-between border border-gray-800/60 cursor-pointer" onclick="toggleQuest(2)">
-            <div class="flex items-center space-x-4">
-              <input type="checkbox" onclick="event.stopPropagation(); toggleQuest(2)" class="quest-checkbox w-5 h-5 accent-amber-500 rounded cursor-pointer">
-              <div>
-                <h3 class="quest-title font-semibold text-gray-200 text-sm sm:text-base">Learn English</h3>
-                <p class="text-xs text-gray-400 mt-0.5">Learning · Harian</p>
-              </div>
-            </div>
-            <span class="quest-xp font-bold text-amber-500 text-sm sm:text-base">+75 XP</span>
-          </div>
-
-          <!-- Item 4 -->
-          <div class="quest-item bg-[#192338] hover:bg-[#1e2b45] transition-colors rounded-xl p-4 sm:p-4.5 flex items-center justify-between border border-gray-800/60 cursor-pointer" onclick="toggleQuest(3)">
-            <div class="flex items-center space-x-4">
-              <input type="checkbox" checked onclick="event.stopPropagation(); toggleQuest(3)" class="quest-checkbox w-5 h-5 accent-amber-500 rounded cursor-pointer">
-              <div>
-                <h3 class="quest-title font-semibold text-gray-200 text-sm sm:text-base line-through text-gray-400">Drink 2L water</h3>
-                <p class="text-xs text-gray-400 mt-0.5">Health · Harian</p>
-              </div>
-            </div>
-            <span class="quest-xp font-bold text-amber-500 text-sm sm:text-base">+30 XP</span>
-          </div>
+        <!-- Quest dinamis melalui javascript -->
         </div>
-
         <!-- Footer Note -->
         <p class="text-xs text-gray-500">Quest direset otomatis setiap hari.</p>
       </section>
