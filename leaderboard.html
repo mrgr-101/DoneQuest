@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10121b">
+  <title>Leaderboard | DoneQuest</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #10121b;
+      --surface: #1b1e2b;
+      --surface-deep: #151827;
+      --border: #292d3d;
+      --muted: #a2a5b5;
+      --text: #f0f0f2;
+      --accent: #ffbf3f;
+      --accent-strong: #ffc33f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .topbar {
+      height: 73px;
+      border-bottom: 1px solid #242632;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: stretch;
+      width: min(1280px, calc(100% - 64px));
+      height: 100%;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      margin-right: 50px;
+      color: var(--accent);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      white-space: nowrap;
+    }
+
+    .navigation {
+      display: flex;
+      align-items: stretch;
+      gap: 34px;
+    }
+
+    .navigation a {
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      color: #b1b2bf;
+      font-size: 16px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .navigation a:hover,
+    .navigation a[aria-current="page"] {
+      color: var(--text);
+    }
+
+    .navigation a[aria-current="page"] {
+      border-bottom-color: var(--accent);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      width: min(1280px, calc(100% - 64px));
+      margin: 38px auto 48px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+
+    .leaderboard {
+      padding: 16px 25px 23px;
+    }
+
+    .leaderboard-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 29px;
+      font-weight: 750;
+      letter-spacing: -.5px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tab {
+      min-width: 80px;
+      min-height: 48px;
+      padding: 0 15px;
+      border: 1px solid #34384a;
+      border-radius: 12px;
+      background: transparent;
+      color: #d2d2d9;
+      cursor: pointer;
+    }
+
+    .tab[aria-pressed="true"] {
+      border-color: var(--accent-strong);
+      background: var(--accent-strong);
+      color: #171717;
+      font-weight: 700;
+    }
+
+    .ranking-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ranking-row {
+      display: grid;
+      grid-template-columns: 38px 44px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 68px;
+      padding: 9px 22px 9px 15px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      background: var(--surface-deep);
+    }
+
+    .ranking-row[hidden] {
+      display: none;
+    }
+
+    .ranking-row.current-user {
+      border-color: var(--accent);
+      background: #2a2517;
+    }
+
+    .rank {
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .avatar {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      flex: none;
+      place-items: center;
+      border-radius: 50%;
+      background: #2a3042;
+      color: #e9e9ed;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .user-details {
+      min-width: 0;
+    }
+
+    .username,
+    .user-level {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .username {
+      font-size: 15px;
+    }
+
+    .user-level {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .xp {
+      color: var(--accent);
+      font-size: 16px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-inner,
+      main {
+        width: min(100% - 40px, 720px);
+      }
+
+      .topbar-inner {
+        overflow-x: auto;
+      }
+
+      .brand {
+        margin-right: 32px;
+      }
+
+      .navigation {
+        gap: 24px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        margin-top: 28px;
+      }
+
+    }
+
+    @media (max-width: 560px) {
+      .topbar-inner,
+      main {
+        width: calc(100% - 28px);
+      }
+
+      .brand {
+        margin-right: 24px;
+        font-size: 21px;
+      }
+
+      .navigation {
+        gap: 20px;
+      }
+
+      .navigation a {
+        font-size: 14px;
+      }
+
+      .leaderboard {
+        padding: 16px 13px;
+      }
+
+      .leaderboard-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .ranking-row {
+        grid-template-columns: 28px 38px minmax(0, 1fr);
+        gap: 9px;
+        padding: 9px 10px;
+      }
+
+      .avatar {
+        width: 38px;
+        height: 38px;
+      }
+
+      .rank {
+        font-size: 18px;
+      }
+
+      .xp {
+        grid-column: 3;
+        margin-top: -5px;
+        font-size: 14px;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html" aria-label="DoneQuest beranda">DoneQuest</a>
+      <nav class="navigation" aria-label="Navigasi utama">
+        <a href="./index.html">Dashboard</a>
+        <a href="./quest.html">Quest Saya</a>
+        <a href="./leaderboard.html" aria-current="page">Leaderboard</a>
+        <a href="./teman.html">Teman</a>
+        <a href="./profil.html">Profil</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel leaderboard" aria-labelledby="leaderboard-title">
+      <div class="leaderboard-heading">
+        <h1 id="leaderboard-title">Leaderboard</h1>
+        <div class="tabs" role="group" aria-label="Jenis leaderboard">
+          <button class="tab" type="button" data-mode="global" aria-pressed="true">Global</button>
+          <button class="tab" type="button" data-mode="friends" aria-pressed="false">Teman</button>
+        </div>
+      </div>
+
+      <ol class="ranking-list" aria-live="polite">
+        <li class="ranking-row">
+          <span class="rank">1</span>
+          <span class="avatar" aria-hidden="true">AK</span>
+          <div class="user-details">
+            <div class="username">@user_satu</div>
+            <div class="user-level">Legend</div>
+          </div>
+          <span class="xp">12.480 XP</span>
+        </li>
+        <li class="ranking-row">
+          <span class="rank">2</span>
+          <span class="avatar" aria-hidden="true">RM</span>
+          <div class="user-details">
+            <div class="username">@user_dua</div>
+            <div class="user-level">Hero</div>
+          </div>
+          <span class="xp">9.915 XP</span>
+        </li>
+        <li class="ranking-row">
+          <span class="rank">3</span>
+          <span class="avatar" aria-hidden="true">SD</span>
+          <div class="user-details">
+            <div class="username">@user_tiga</div>
+            <div class="user-level">Hero</div>
+          </div>
+          <span class="xp">8.760 XP</span>
+        </li>
+        <li class="ranking-row">
+          <span class="rank">4</span>
+          <span class="avatar" aria-hidden="true">BT</span>
+          <div class="user-details">
+            <div class="username">@user_empat</div>
+            <div class="user-level">Explorer</div>
+          </div>
+          <span class="xp">3.420 XP</span>
+        </li>
+        <li class="ranking-row current-user" aria-current="true">
+          <span class="rank">5</span>
+          <span class="avatar" aria-hidden="true">NP</span>
+          <div class="user-details">
+            <div class="username">@namapengguna (kamu)</div>
+            <div class="user-level">Level 12 — Explorer</div>
+          </div>
+          <span class="xp">2.840 XP</span>
+        </li>
+        <li class="ranking-row">
+          <span class="rank">6</span>
+          <span class="avatar" aria-hidden="true">LF</span>
+          <div class="user-details">
+            <div class="username">@user_enam</div>
+            <div class="user-level">Adventurer</div>
+          </div>
+          <span class="xp">1.905 XP</span>
+        </li>
+        <li class="ranking-row">
+          <span class="rank">7</span>
+          <span class="avatar" aria-hidden="true">NR</span>
+          <div class="user-details">
+            <div class="username">@user_tujuh</div>
+            <div class="user-level">Adventurer</div>
+          </div>
+          <span class="xp">1.680 XP</span>
+        </li>
+        <li class="ranking-row">
+          <span class="rank">8</span>
+          <span class="avatar" aria-hidden="true">DK</span>
+          <div class="user-details">
+            <div class="username">@user_delapan</div>
+            <div class="user-level">Explorer</div>
+          </div>
+          <span class="xp">1.420 XP</span>
+        </li>
+        <li class="ranking-row">
+          <span class="rank">9</span>
+          <span class="avatar" aria-hidden="true">SL</span>
+          <div class="user-details">
+            <div class="username">@user_sembilan</div>
+            <div class="user-level">Explorer</div>
+          </div>
+          <span class="xp">1.175 XP</span>
+        </li>
+        <li class="ranking-row">
+          <span class="rank">10</span>
+          <span class="avatar" aria-hidden="true">RF</span>
+          <div class="user-details">
+            <div class="username">@user_sepuluh</div>
+            <div class="user-level">Apprentice</div>
+          </div>
+          <span class="xp">940 XP</span>
+        </li>
+      </ol>
+    </section>
+
+  </main>
+  <script>
+    const rankingList = document.querySelector(".ranking-list");
+    const tabs = [...document.querySelectorAll(".tab[data-mode]")];
+    const rows = [...rankingList.querySelectorAll(".ranking-row")].map((element) => ({
+      element,
+      originalRank: element.querySelector(".rank").textContent,
+      username: element.querySelector(".username").textContent.trim(),
+    }));
+    const friendUsernames = new Set([
+      "@user_empat",
+      "@namapengguna (kamu)",
+      "@user_enam",
+    ]);
+
+    function showLeaderboard(mode) {
+      const visibleRows = rows.filter(({ username }) =>
+        mode === "global" || friendUsernames.has(username)
+      );
+
+      tabs.forEach((tab) => {
+        tab.setAttribute("aria-pressed", String(tab.dataset.mode === mode));
+      });
+
+      rows.forEach((row) => {
+        const rank = row.element.querySelector(".rank");
+        const visibleIndex = visibleRows.indexOf(row);
+        row.element.hidden = visibleIndex === -1;
+        rank.textContent = mode === "global" || visibleIndex === -1
+          ? row.originalRank
+          : String(visibleIndex + 1);
+      });
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => showLeaderboard(tab.dataset.mode));
+    });
+  </script>
+</body>
+</html>
