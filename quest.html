@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quest Saya — DoneQuest</title>
+  <link href="./src/output.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="./quest.css" rel="stylesheet">
+</head>
+<body class="min-h-screen antialiased">
+  <header class="border-b border-gray-800/60 bg-[#0f1523]/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-12">
+        <a href="index.html" class="text-xl font-bold tracking-tight text-amber-500 hover:text-amber-400 transition-colors">DoneQuest</a>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+          <a href="index.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Dashboard</a>
+          <a href="quest.html" class="text-white relative py-5 border-b-2 border-amber-500">Quest Saya</a>
+          <a href="leaderboard.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Leaderboard</a>
+          <a href="teman.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Teman</a>
+          <a href="profil.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Profil</a>
+        </nav>
+      </div>
+      <button id="mobileMenuBtn" class="md:hidden text-gray-300 text-2xl" aria-label="Buka menu">☰</button>
+    </div>
+    <nav id="mobileMenu" class="hidden md:hidden bg-[#131b2e] border-b border-gray-800 px-6 py-4 space-y-3">
+      <a class="block text-gray-400" href="index.html">Dashboard</a>
+      <a class="block text-amber-400 font-medium" href="quest.html">Quest Saya</a>
+      <a class="block text-gray-400" href="leaderboard.html">Leaderboard</a>
+      <a class="block text-gray-400" href="teman.html">Teman</a>
+      <a class="block text-gray-400" href="profil.html">Profil</a>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="main-grid">
+      <section class="panel quest-panel p-5 sm:p-6 lg:p-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4">Quest Saya</h1>
+        <div class="flex flex-wrap gap-2 mb-4" id="filters" role="group" aria-label="Filter quest">
+          <button class="filter-btn active" data-filter="Semua">Semua</button>
+          <button class="filter-btn" data-filter="Harian">Harian</button>
+          <button class="filter-btn" data-filter="Custom">Custom</button>
+          <button class="filter-btn" data-filter="Selesai">Selesai</button>
+        </div>
+        <div id="questList" class="space-y-3" aria-live="polite"></div>
+        <p class="text-xs text-gray-500 mt-6">Klik kartu atau kotak centang untuk menandai quest selesai dan menambah progres XP.</p>
+      </section>
+
+      <aside class="quest-sidebar">
+        <section class="panel p-5 sm:p-6">
+          <h2 class="text-lg font-bold text-white mb-4">Buat Custom Quest</h2>
+          <form id="addQuestForm" class="space-y-4">
+            <div>
+              <label for="questTitleInput" class="block text-sm muted mb-1.5">Judul quest</label>
+              <input id="questTitleInput" class="field" type="text" maxlength="100" placeholder="Contoh: Latihan coding 1 jam" required>
+            </div>
+            <div>
+              <label for="questCategoryInput" class="block text-sm muted mb-1.5">Kategori</label>
+              <select id="questCategoryInput" class="field">
+                <option>Learning</option><option>Fitness</option><option>Health</option><option>Reading</option><option>Mindset</option><option>Productivity</option><option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="questFrequencyInput" class="block text-sm muted mb-1.5">Frekuensi</label>
+              <select id="questFrequencyInput" class="field">
+                <option value="Harian">Harian</option><option value="Custom">Custom</option>
+              </select>
+            </div>
+            <div>
+              <label for="questXpInput" class="block text-sm muted mb-1.5">XP reward</label>
+              <input id="questXpInput" class="field" type="number" min="5" max="500" step="5" value="60" required>
+            </div>
+            <button class="primary-btn w-full mt-1" type="submit">Simpan Quest</button>
+            <p id="formMessage" class="text-sm muted" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="panel p-5 sm:p-6">
+          <h2 class="text-lg font-bold text-white mb-4">Progres hari ini</h2>
+          <div class="w-full rounded-full overflow-hidden h-3" style="background:#1e293b">
+            <div id="dailyProgressBar" class="bg-amber-500 h-full rounded-full transition-all duration-300" style="width:0%;"></div>
+          </div>
+          <p id="dailyProgressText" class="text-sm muted mt-3">0 dari 0 quest selesai hari ini · +0 XP</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <script src="quest.js"></script>
+</body>
+</html>
