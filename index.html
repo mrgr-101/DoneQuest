@@ -4,11 +4,217 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./src/output.css" rel="stylesheet">
-  <title>DoneQuest</title>
+  <title>DoneQuest-Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0f19;
+      color: #e2e8f0;
+    }
+  </style>
 </head>
-<body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+<body class="min-h-screen bg-[#0b0f19] text-gray-200 antialiased selection:bg-amber-500 selection:text-black">
+
+  <header class="border-b border-gray-800/60 bg-[#0f1523]/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center space-x-12">
+        <a href="index.html" class="text-xl font-bold tracking-tight text-amber-500 hover:text-amber-400 transition-colors">
+          DoneQuest
+        </a>
+        
+        <!-- Nav Bar -->
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <a href="index.html" class="text-white relative py-5 border-b-2 border-amber-500 font-semibold">Dashboard</a>
+          <a href="quest.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Quest Saya</a>
+          <a href="leaderboard.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Leaderboard</a>
+          <a href="teman.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Teman</a>
+          <a href="profil.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Profil</a>
+        </nav>
+      </div>
+
+      <!-- Mobile Nav Button -->
+      <div class="md:hidden">
+        <button id="mobileMenuBtn" class="text-gray-400 hover:text-white focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-[#131b2e] border-b border-gray-800 px-6 py-4 space-y-3">
+      <a href="index.html" class="block text-amber-500 font-medium">Dashboard</a>
+      <a href="quest.html" class="block text-gray-400 hover:text-gray-200">Quest Saya</a>
+      <a href="leaderboard.html" class="block text-gray-400 hover:text-gray-200">Leaderboard</a>
+      <a href="teman.html" class="block text-gray-400 hover:text-gray-200">Teman</a>
+      <a href="profil.html" class="block text-gray-400 hover:text-gray-200">Profil</a>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Daily Quests Section (Left Column) -->
+      <section class="lg:col-span-7 xl:col-span-8 bg-[#131b2e] rounded-2xl p-6 sm:p-8 border border-gray-800/80 shadow-xl">
+        
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Daily Quests</h1>
+          <button id="openModalBtn" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-5 py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20 active:scale-95 flex items-center justify-center gap-1.5">
+            <span class="text-lg leading-none">+</span> Buat Custom Quest
+          </button>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="mb-6">
+          <p id="dailyProgressText" class="text-xs sm:text-sm text-gray-400 font-medium mb-2.5">
+            3 dari 4 quest selesai hari ini · <span class="text-amber-400">+180 XP</span>
+          </p>
+          <div class="w-full bg-[#1e293b] rounded-full h-3 overflow-hidden p-0.5">
+            <div id="dailyProgressBar" class="bg-amber-500 h-2 rounded-full transition-all duration-500 ease-out" style="width: 75%;"></div>
+          </div>
+        </div>
+
+        <!-- Quest Cards List -->
+        <div id="questList" class="space-y-3.5 mb-8">
+          <!-- Item 1 -->
+          <div class="quest-item bg-[#192338] hover:bg-[#1e2b45] transition-colors rounded-xl p-4 sm:p-4.5 flex items-center justify-between border border-gray-800/60 cursor-pointer" onclick="toggleQuest(0)">
+            <div class="flex items-center space-x-4">
+              <input type="checkbox" checked onclick="event.stopPropagation(); toggleQuest(0)" class="quest-checkbox w-5 h-5 accent-amber-500 rounded cursor-pointer">
+              <div>
+                <h3 class="quest-title font-semibold text-gray-200 text-sm sm:text-base line-through text-gray-400">Read 20 pages</h3>
+                <p class="text-xs text-gray-400 mt-0.5">Reading · Harian</p>
+              </div>
+            </div>
+            <span class="quest-xp font-bold text-amber-500 text-sm sm:text-base">+50 XP</span>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="quest-item bg-[#192338] hover:bg-[#1e2b45] transition-colors rounded-xl p-4 sm:p-4.5 flex items-center justify-between border border-gray-800/60 cursor-pointer" onclick="toggleQuest(1)">
+            <div class="flex items-center space-x-4">
+              <input type="checkbox" checked onclick="event.stopPropagation(); toggleQuest(1)" class="quest-checkbox w-5 h-5 accent-amber-500 rounded cursor-pointer">
+              <div>
+                <h3 class="quest-title font-semibold text-gray-200 text-sm sm:text-base line-through text-gray-400">Exercise 30 min</h3>
+                <p class="text-xs text-gray-400 mt-0.5">Fitness · Harian</p>
+              </div>
+            </div>
+            <span class="quest-xp font-bold text-amber-500 text-sm sm:text-base">+100 XP</span>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="quest-item bg-[#192338] hover:bg-[#1e2b45] transition-colors rounded-xl p-4 sm:p-4.5 flex items-center justify-between border border-gray-800/60 cursor-pointer" onclick="toggleQuest(2)">
+            <div class="flex items-center space-x-4">
+              <input type="checkbox" onclick="event.stopPropagation(); toggleQuest(2)" class="quest-checkbox w-5 h-5 accent-amber-500 rounded cursor-pointer">
+              <div>
+                <h3 class="quest-title font-semibold text-gray-200 text-sm sm:text-base">Learn English</h3>
+                <p class="text-xs text-gray-400 mt-0.5">Learning · Harian</p>
+              </div>
+            </div>
+            <span class="quest-xp font-bold text-amber-500 text-sm sm:text-base">+75 XP</span>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="quest-item bg-[#192338] hover:bg-[#1e2b45] transition-colors rounded-xl p-4 sm:p-4.5 flex items-center justify-between border border-gray-800/60 cursor-pointer" onclick="toggleQuest(3)">
+            <div class="flex items-center space-x-4">
+              <input type="checkbox" checked onclick="event.stopPropagation(); toggleQuest(3)" class="quest-checkbox w-5 h-5 accent-amber-500 rounded cursor-pointer">
+              <div>
+                <h3 class="quest-title font-semibold text-gray-200 text-sm sm:text-base line-through text-gray-400">Drink 2L water</h3>
+                <p class="text-xs text-gray-400 mt-0.5">Health · Harian</p>
+              </div>
+            </div>
+            <span class="quest-xp font-bold text-amber-500 text-sm sm:text-base">+30 XP</span>
+          </div>
+        </div>
+
+        <!-- Footer Note -->
+        <p class="text-xs text-gray-500">Quest direset otomatis setiap hari.</p>
+      </section>
+
+
+      <!-- User Progress Sidebar (Right Column) -->
+      <aside class="lg:col-span-5 xl:col-span-4 space-y-6">
+        
+        <!-- Level Progress (Card 1) -->
+        <div class="bg-[#131b2e] rounded-2xl p-6 border border-gray-800/80 shadow-xl">
+          <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Level kamu</p>
+          <h2 id="userLevelText" class="text-xl sm:text-2xl font-bold text-white mb-4">Level 12 — Explorer</h2>
+          
+          <div class="w-full bg-[#1e293b] rounded-full h-3 overflow-hidden mb-3">
+            <div id="levelProgressBar" class="bg-amber-500 h-3 rounded-full transition-all duration-500 ease-out" style="width: 88.75%;"></div>
+          </div>
+          
+          <p id="userXpText" class="text-xs text-gray-400">
+            2.840 / 3.200 XP menuju Level 13
+          </p>
+        </div>
+
+        <!-- Streak Stats (Card 2) -->
+        <div class="bg-[#131b2e] rounded-2xl p-6 border border-gray-800/80 shadow-xl">
+          <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Streak</p>
+          <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">7 hari berturut-turut</h2>
+          <p class="text-xs text-gray-400">Rekor terpanjang: 12 hari</p>
+        </div>
+
+        <!-- Recent Achievements (Card 3) -->
+        <div class="bg-[#131b2e] rounded-2xl p-6 border border-gray-800/80 shadow-xl">
+          <h2 class="text-base font-bold text-white mb-4">Achievement terbaru</h2>
+          
+          <div class="flex items-center space-x-3">
+            <!-- Badge 1 -->
+            <div class="flex items-center bg-[#192338] px-3.5 py-2.5 rounded-xl border border-gray-800/80 space-x-2.5">
+              <span class="text-amber-400 text-lg">★</span>
+              <span class="text-xs font-medium text-gray-200">7 Day Streak</span>
+            </div>
+            
+            <!-- Badge 2 -->
+            <div class="flex items-center bg-[#192338] px-3.5 py-2.5 rounded-xl border border-gray-800/80 space-x-2.5">
+              <span class="text-amber-400 text-lg">★</span>
+              <span class="text-xs font-medium text-gray-200">Early Bird</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Buat Custom Quest (Modal) -->
+  <div id="questModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#131b2e] border border-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative transform transition-all scale-95 opacity-0 duration-200" id="modalContent">
+      <div class="flex justify-between items-center mb-5">
+        <h3 class="text-lg font-bold text-white">Tambah Custom Quest</h3>
+        <button id="closeModalBtn" class="text-gray-400 hover:text-white text-xl font-bold focus:outline-none">&times;</button>
+      </div>
+
+      <form id="addQuestForm" onsubmit="addCustomQuest(event)">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-400 mb-1">Nama Quest</label>
+            <input type="text" id="questTitleInput" required placeholder="Contoh: Meditation 10 min" class="w-full bg-[#192338] border border-gray-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-400 mb-1">Kategori</label>
+            <input type="text" id="questCategoryInput" required placeholder="Contoh: Health / Mindset" class="w-full bg-[#192338] border border-gray-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-400 mb-1">Hadiah XP</label>
+            <input type="number" id="questXpInput" required min="5" max="500" value="50" class="w-full bg-[#192338] border border-gray-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+          </div>
+        </div>
+
+        <div class="mt-6 flex justify-end space-x-3">
+          <button type="button" id="cancelModalBtn" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-[#192338] transition-colors">Batal</button>
+          <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-4 py-2 rounded-xl text-sm transition-all">Simpan Quest</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="index.js"></script>
 </body>
 </html>
