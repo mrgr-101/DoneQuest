@@ -1,0 +1,124 @@
+.main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(340px, 1fr);
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+}
+
+.quest-panel { min-width: 0; }
+.quest-sidebar { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+
+body {
+  font-family: Inter, sans-serif;
+  background: #0b0f19;
+  color: #e2e8f0;
+}
+
+.panel {
+  background: #131b2e;
+  border: 1px solid rgba(31, 41, 55, 0.8);
+  border-radius: 16px; 
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.quest-card {
+  background: #192338;
+  border: 1px solid rgba(31, 41, 55, 0.6); 
+  border-radius: 12px;
+  transition: background 0.18s, border-color 0.18s;
+}
+
+.quest-card:hover {
+  background: #1e2b45;
+  border-color: rgba(31, 41, 55, 0.8);
+}
+
+.filter-btn {
+  border: 1px solid rgba(55, 65, 81, 0.8);
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.15s;
+  background: transparent;
+}
+
+.filter-btn.active {
+  background: var(--color-amber-500, #f9bd3c);
+  border-color: var(--color-amber-500, #f9bd3c);
+  color: var(--color-slate-950, #020617);
+}
+
+.field {
+  width: 100%;
+  border: 1px solid rgba(55, 65, 81, 0.8);
+  background: #192338;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 10px 14px;
+  outline: none;
+}
+
+.field:focus {
+  border-color: var(--color-amber-500, #f9bd3c);
+}
+
+.field option {
+  background: #192338;
+}
+
+.quest-check {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--color-amber-500, #f9bd3c);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: var(--color-amber-500, #f9bd3c);
+  color: var(--color-slate-950, #020617);
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 10px 16px;
+  transition: 0.15s;
+  box-shadow: 0 10px 15px -3px rgba(249, 189, 60, 0.1), 0 4px 6px -4px rgba(249, 189, 60, 0.1);
+}
+
+.primary-btn:hover {
+  background: var(--color-amber-400, #fbbf24);
+}
+
+.muted {
+  color: var(--color-gray-400, #9ca3af);
+}
+
+.delete-btn {
+  color: #6b7280; 
+  transition: color 0.15s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.delete-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.delete-btn:hover {
+  color: #ef4444; 
+  background-color: rgba(239, 68, 68, 0.1); 
+}
+
+@media (max-width: 900px) {
+  .main-grid { grid-template-columns: minmax(0, 1fr); }
+  .quest-panel { min-height: 0; }
+}
+
+@media (min-width: 901px) {
+  .quest-panel { min-height: 660px; }
+}
