@@ -137,37 +137,6 @@
     </div>
   </main>
 
-  <!-- Buat Custom Quest (Modal) -->
-  <div id="questModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#131b2e] border border-gray-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative transform transition-all scale-95 opacity-0 duration-200" id="modalContent">
-      <div class="flex justify-between items-center mb-5">
-        <h3 class="text-lg font-bold text-white">Tambah Custom Quest</h3>
-        <button id="closeModalBtn" class="text-gray-400 hover:text-white text-xl font-bold focus:outline-none">&times;</button>
-      </div>
-
-      <form id="addQuestForm" onsubmit="addCustomQuest(event)">
-        <div class="space-y-4">
-          <div>
-            <label class="block text-xs font-medium text-gray-400 mb-1">Nama Quest</label>
-            <input type="text" id="questTitleInput" required placeholder="Contoh: Meditation 10 min" class="w-full bg-[#192338] border border-gray-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-gray-400 mb-1">Kategori</label>
-            <input type="text" id="questCategoryInput" required placeholder="Contoh: Health / Mindset" class="w-full bg-[#192338] border border-gray-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-gray-400 mb-1">Hadiah XP</label>
-            <input type="number" id="questXpInput" required min="5" max="500" value="50" class="w-full bg-[#192338] border border-gray-700/80 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
-          </div>
-        </div>
-
-        <div class="mt-6 flex justify-end space-x-3">
-          <button type="button" id="cancelModalBtn" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-[#192338] transition-colors">Batal</button>
-          <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold px-4 py-2 rounded-xl text-sm transition-all">Simpan Quest</button>
-        </div>
-      </form>
-    </div>
-  </div>
   <script src="index.js"></script>
 </body>
 </html>
