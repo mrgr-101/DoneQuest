@@ -1,460 +1,243 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#10121b">
-  <title>Leaderboard | DoneQuest</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --page: #10121b;
-      --surface: #1b1e2b;
-      --surface-deep: #151827;
-      --border: #292d3d;
-      --muted: #a2a5b5;
-      --text: #f0f0f2;
-      --accent: #ffbf3f;
-      --accent-strong: #ffc33f;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      min-width: 320px;
-      min-height: 100vh;
-      margin: 0;
-      background: var(--page);
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    .topbar {
-      height: 73px;
-      border-bottom: 1px solid #242632;
-    }
-
-    .topbar-inner {
-      display: flex;
-      align-items: stretch;
-      width: min(1280px, calc(100% - 64px));
-      height: 100%;
-      margin: 0 auto;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      margin-right: 50px;
-      color: var(--accent);
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -.5px;
-      white-space: nowrap;
-    }
-
-    .navigation {
-      display: flex;
-      align-items: stretch;
-      gap: 34px;
-    }
-
-    .navigation a {
-      display: flex;
-      align-items: center;
-      border-bottom: 2px solid transparent;
-      color: #b1b2bf;
-      font-size: 16px;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .navigation a:hover,
-    .navigation a[aria-current="page"] {
-      color: var(--text);
-    }
-
-    .navigation a[aria-current="page"] {
-      border-bottom-color: var(--accent);
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      width: min(1280px, calc(100% - 64px));
-      margin: 38px auto 48px;
-    }
-
-    .panel {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--surface);
-    }
-
-    .leaderboard {
-      padding: 16px 25px 23px;
-    }
-
-    .leaderboard-heading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 25px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 29px;
-      font-weight: 750;
-      letter-spacing: -.5px;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-    }
-
-    .tab {
-      min-width: 80px;
-      min-height: 48px;
-      padding: 0 15px;
-      border: 1px solid #34384a;
-      border-radius: 12px;
-      background: transparent;
-      color: #d2d2d9;
-      cursor: pointer;
-    }
-
-    .tab[aria-pressed="true"] {
-      border-color: var(--accent-strong);
-      background: var(--accent-strong);
-      color: #171717;
-      font-weight: 700;
-    }
-
-    .ranking-list {
-      display: grid;
-      gap: 12px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .ranking-row {
-      display: grid;
-      grid-template-columns: 38px 44px minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 12px;
-      min-height: 68px;
-      padding: 9px 22px 9px 15px;
-      border: 1px solid transparent;
-      border-radius: 14px;
-      background: var(--surface-deep);
-    }
-
-    .ranking-row[hidden] {
-      display: none;
-    }
-
-    .ranking-row.current-user {
-      border-color: var(--accent);
-      background: #2a2517;
-    }
-
-    .rank {
-      color: var(--accent);
-      font-size: 20px;
-      font-weight: 750;
-      text-align: center;
-    }
-
-    .avatar {
-      display: grid;
-      width: 44px;
-      height: 44px;
-      flex: none;
-      place-items: center;
-      border-radius: 50%;
-      background: #2a3042;
-      color: #e9e9ed;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .user-details {
-      min-width: 0;
-    }
-
-    .username,
-    .user-level {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .username {
-      font-size: 15px;
-    }
-
-    .user-level {
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .xp {
-      color: var(--accent);
-      font-size: 16px;
-      font-weight: 750;
-      white-space: nowrap;
-    }
-
-    @media (max-width: 900px) {
-      .topbar-inner,
-      main {
-        width: min(100% - 40px, 720px);
-      }
-
-      .topbar-inner {
-        overflow-x: auto;
-      }
-
-      .brand {
-        margin-right: 32px;
-      }
-
-      .navigation {
-        gap: 24px;
-      }
-
-      main {
-        grid-template-columns: 1fr;
-        margin-top: 28px;
-      }
-
-    }
-
-    @media (max-width: 560px) {
-      .topbar-inner,
-      main {
-        width: calc(100% - 28px);
-      }
-
-      .brand {
-        margin-right: 24px;
-        font-size: 21px;
-      }
-
-      .navigation {
-        gap: 20px;
-      }
-
-      .navigation a {
-        font-size: 14px;
-      }
-
-      .leaderboard {
-        padding: 16px 13px;
-      }
-
-      .leaderboard-heading {
-        align-items: flex-start;
-        flex-direction: column;
-        margin-bottom: 18px;
-      }
-
-      h1 {
-        font-size: 26px;
-      }
-
-      .ranking-row {
-        grid-template-columns: 28px 38px minmax(0, 1fr);
-        gap: 9px;
-        padding: 9px 10px;
-      }
-
-      .avatar {
-        width: 38px;
-        height: 38px;
-      }
-
-      .rank {
-        font-size: 18px;
-      }
-
-      .xp {
-        grid-column: 3;
-        margin-top: -5px;
-        font-size: 14px;
-      }
-
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>DoneQuest — Leaderboard</title>
 </head>
-<body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="./index.html" aria-label="DoneQuest beranda">DoneQuest</a>
-      <nav class="navigation" aria-label="Navigasi utama">
-        <a href="./index.html">Dashboard</a>
-        <a href="./quest.html">Quest Saya</a>
-        <a href="./leaderboard.html" aria-current="page">Leaderboard</a>
-        <a href="./teman.html">Teman</a>
-        <a href="./profil.html">Profil</a>
-      </nav>
+<body class="min-h-screen bg-[#0b0f19] text-gray-200 font-['Inter']">
+
+  <!-- Header / Navigasi (Sama Persis dengan Dashboard, Quest, Teman & Profil) -->
+  <header class="border-b border-gray-800/60 bg-[#0f1523]/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-12">
+        <a href="index.html" class="text-xl font-bold tracking-tight text-amber-500 hover:text-amber-400 transition-colors">DoneQuest</a>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+          <a href="index.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Dashboard</a>
+          <a href="quest.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Quest Saya</a>
+          <a href="leaderboard.html" class="text-white relative py-5 border-b-2 border-amber-500">Leaderboard</a>
+          <a href="teman.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Teman</a>
+          <a href="profil.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Profil</a>
+        </nav>
+      </div>
+      <button id="mobileMenuBtn" class="md:hidden text-gray-300 text-2xl" aria-label="Buka menu">☰</button>
     </div>
+    <nav id="mobileMenu" class="hidden md:hidden bg-[#131b2e] border-b border-gray-800 px-6 py-4 space-y-3">
+      <a class="block text-gray-400" href="index.html">Dashboard</a>
+      <a class="block text-gray-400" href="quest.html">Quest Saya</a>
+      <a class="block text-amber-400 font-medium" href="leaderboard.html">Leaderboard</a>
+      <a class="block text-gray-400" href="teman.html">Teman</a>
+      <a class="block text-gray-400" href="profil.html">Profil</a>
+    </nav>
   </header>
 
-  <main>
-    <section class="panel leaderboard" aria-labelledby="leaderboard-title">
-      <div class="leaderboard-heading">
-        <h1 id="leaderboard-title">Leaderboard</h1>
-        <div class="tabs" role="group" aria-label="Jenis leaderboard">
-          <button class="tab" type="button" data-mode="global" aria-pressed="true">Global</button>
-          <button class="tab" type="button" data-mode="friends" aria-pressed="false">Teman</button>
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <section class="bg-[#192338] border border-gray-800/60 rounded-xl p-6 sm:p-7" aria-labelledby="leaderboard-title">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-800/60 pb-4">
+        <h1 id="leaderboard-title" class="text-xl sm:text-2xl font-bold text-gray-100">Leaderboard</h1>
+        <div class="flex gap-2" role="group" aria-label="Jenis leaderboard">
+          <button type="button" data-mode="global" aria-pressed="true" class="tab cursor-pointer rounded-xl border px-5 py-2 text-sm transition-colors">Global</button>
+          <button type="button" data-mode="friends" aria-pressed="false" class="tab cursor-pointer rounded-xl border px-5 py-2 text-sm transition-colors">Teman</button>
         </div>
       </div>
 
-      <ol class="ranking-list" aria-live="polite">
-        <li class="ranking-row">
-          <span class="rank">1</span>
-          <span class="avatar" aria-hidden="true">AK</span>
-          <div class="user-details">
-            <div class="username">@user_satu</div>
-            <div class="user-level">Legend</div>
+      <ol id="ranking-list" class="mt-6 space-y-3" aria-live="polite">
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">1</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">AK</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_satu</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Legend</p>
           </div>
-          <span class="xp">12.480 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">12.480 XP</p>
         </li>
-        <li class="ranking-row">
-          <span class="rank">2</span>
-          <span class="avatar" aria-hidden="true">RM</span>
-          <div class="user-details">
-            <div class="username">@user_dua</div>
-            <div class="user-level">Hero</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">2</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">RM</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_dua</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Hero</p>
           </div>
-          <span class="xp">9.915 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">9.915 XP</p>
         </li>
-        <li class="ranking-row">
-          <span class="rank">3</span>
-          <span class="avatar" aria-hidden="true">SD</span>
-          <div class="user-details">
-            <div class="username">@user_tiga</div>
-            <div class="user-level">Hero</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">3</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">SD</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_tiga</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Hero</p>
           </div>
-          <span class="xp">8.760 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">8.760 XP</p>
         </li>
-        <li class="ranking-row">
-          <span class="rank">4</span>
-          <span class="avatar" aria-hidden="true">BT</span>
-          <div class="user-details">
-            <div class="username">@user_empat</div>
-            <div class="user-level">Explorer</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">4</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">BT</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_empat</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Explorer</p>
           </div>
-          <span class="xp">3.420 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">3.420 XP</p>
         </li>
-        <li class="ranking-row current-user" aria-current="true">
-          <span class="rank">5</span>
-          <span class="avatar" aria-hidden="true">NP</span>
-          <div class="user-details">
-            <div class="username">@namapengguna (kamu)</div>
-            <div class="user-level">Level 12 — Explorer</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-amber-500/70 bg-amber-500/10 px-5 py-4" aria-current="true">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">5</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">NP</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@namapengguna (kamu)</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Level 12 — Explorer</p>
           </div>
-          <span class="xp">2.840 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">2.840 XP</p>
         </li>
-        <li class="ranking-row">
-          <span class="rank">6</span>
-          <span class="avatar" aria-hidden="true">LF</span>
-          <div class="user-details">
-            <div class="username">@user_enam</div>
-            <div class="user-level">Adventurer</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">6</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">LF</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_enam</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Adventurer</p>
           </div>
-          <span class="xp">1.905 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">1.905 XP</p>
         </li>
-        <li class="ranking-row">
-          <span class="rank">7</span>
-          <span class="avatar" aria-hidden="true">NR</span>
-          <div class="user-details">
-            <div class="username">@user_tujuh</div>
-            <div class="user-level">Adventurer</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">7</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">NR</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_tujuh</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Adventurer</p>
           </div>
-          <span class="xp">1.680 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">1.680 XP</p>
         </li>
-        <li class="ranking-row">
-          <span class="rank">8</span>
-          <span class="avatar" aria-hidden="true">DK</span>
-          <div class="user-details">
-            <div class="username">@user_delapan</div>
-            <div class="user-level">Explorer</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">8</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">DK</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_delapan</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Explorer</p>
           </div>
-          <span class="xp">1.420 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">1.420 XP</p>
         </li>
-        <li class="ranking-row">
-          <span class="rank">9</span>
-          <span class="avatar" aria-hidden="true">SL</span>
-          <div class="user-details">
-            <div class="username">@user_sembilan</div>
-            <div class="user-level">Explorer</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">9</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">SL</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_sembilan</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Explorer</p>
           </div>
-          <span class="xp">1.175 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">1.175 XP</p>
         </li>
-        <li class="ranking-row">
-          <span class="rank">10</span>
-          <span class="avatar" aria-hidden="true">RF</span>
-          <div class="user-details">
-            <div class="username">@user_sepuluh</div>
-            <div class="user-level">Apprentice</div>
+        <li class="ranking-row flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+          <span class="rank w-6 shrink-0 text-center text-lg font-bold text-amber-500">10</span>
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500" aria-hidden="true">RF</div>
+          <div class="flex-1 min-w-0">
+            <p class="username font-semibold text-sm text-gray-200 truncate">@user_sepuluh</p>
+            <p class="text-xs text-gray-400 truncate mt-0.5">Apprentice</p>
           </div>
-          <span class="xp">940 XP</span>
+          <p class="shrink-0 font-bold text-sm text-amber-500">940 XP</p>
         </li>
       </ol>
     </section>
-
   </main>
-  <script>
-    const rankingList = document.querySelector(".ranking-list");
-    const tabs = [...document.querySelectorAll(".tab[data-mode]")];
-    const rows = [...rankingList.querySelectorAll(".ranking-row")].map((element) => ({
-      element,
-      originalRank: element.querySelector(".rank").textContent,
-      username: element.querySelector(".username").textContent.trim(),
-    }));
-    const friendUsernames = new Set([
-      "@user_empat",
-      "@namapengguna (kamu)",
-      "@user_enam",
-    ]);
 
-    function showLeaderboard(mode) {
-      const visibleRows = rows.filter(({ username }) =>
-        mode === "global" || friendUsernames.has(username)
-      );
+  <script>
+    (() => {
+      const STORAGE_KEY = "donequest-quests-v1";
+      const BASE_USER_XP = 2660; // Base XP awal pengguna
+
+      const rankingList = document.getElementById("ranking-list");
+      const tabs = [...document.querySelectorAll(".tab[data-mode]")];
+
+      // Ambil daftar teman dari localStorage (yang disinkronkan dari teman.html)
+      function getStoredFriends() {
+        try {
+          const saved = JSON.parse(localStorage.getItem("donequest_friends")) || [];
+          const names = saved.map(f => f.nama.startsWith("@") ? f.nama : `@${f.nama}`);
+          return new Set([...names, "@namapengguna (kamu)"]);
+        } catch {
+          return new Set(["@user_empat", "@namapengguna (kamu)", "@user_enam"]);
+        }
+      }
+
+      // Hitung akumulasi XP pengguna saat ini dari localStorage
+      function getUserXP() {
+        try {
+          const savedQuests = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+          const earnedXP = savedQuests
+            .filter(q => q.completed)
+            .reduce((sum, q) => sum + Number(q.xp || 0), 0);
+          return BASE_USER_XP + earnedXP;
+        } catch {
+          return BASE_USER_XP;
+        }
+      }
+
+      const rows = [...rankingList.querySelectorAll(".ranking-row")].map((element) => {
+        const usernameEl = element.querySelector(".username");
+        const username = usernameEl ? usernameEl.textContent.trim() : "";
+        const xpEl = element.querySelectorAll("p")[1]; // Text XP
+
+        // Update XP pengguna aktif jika ini baris milik user
+        if (username.includes("namapengguna")) {
+          const currentXP = getUserXP();
+          if (xpEl) xpEl.textContent = `${currentXP.toLocaleString('id-ID')} XP`;
+        }
+
+        return {
+          element,
+          originalRank: element.querySelector(".rank").textContent,
+          username
+        };
+      });
+
+      const ACTIVE = ["border-amber-500", "bg-amber-500", "text-[#0b0f19]", "font-bold"];
+      const INACTIVE = ["border-gray-800", "bg-transparent", "text-gray-300", "font-semibold", "hover:bg-gray-800/50"];
+
+      function showLeaderboard(mode) {
+        const friendUsernames = getStoredFriends();
+
+        const visibleRows = rows.filter(({ username }) =>
+          mode === "global" || friendUsernames.has(username)
+        );
+
+        tabs.forEach((tab) => {
+          const active = tab.dataset.mode === mode;
+          tab.setAttribute("aria-pressed", String(active));
+          tab.classList.remove(...ACTIVE, ...INACTIVE);
+          tab.classList.add(...(active ? ACTIVE : INACTIVE));
+        });
+
+        rows.forEach((row) => {
+          const rank = row.element.querySelector(".rank");
+          const visibleIndex = visibleRows.indexOf(row);
+          row.element.classList.toggle("hidden", visibleIndex === -1);
+          if (rank) {
+            rank.textContent = mode === "global" || visibleIndex === -1
+              ? row.originalRank
+              : String(visibleIndex + 1);
+          }
+        });
+      }
 
       tabs.forEach((tab) => {
-        tab.setAttribute("aria-pressed", String(tab.dataset.mode === mode));
+        tab.addEventListener("click", () => showLeaderboard(tab.dataset.mode));
       });
 
-      rows.forEach((row) => {
-        const rank = row.element.querySelector(".rank");
-        const visibleIndex = visibleRows.indexOf(row);
-        row.element.hidden = visibleIndex === -1;
-        rank.textContent = mode === "global" || visibleIndex === -1
-          ? row.originalRank
-          : String(visibleIndex + 1);
-      });
-    }
+      // Toggle menu mobile
+      const mobileBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+      }
 
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => showLeaderboard(tab.dataset.mode));
-    });
+      // Sync realtime jika ada quest yang dicentang atau teman ditambah di tab lain
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY || e.key === "donequest_friends") {
+          location.reload();
+        }
+      });
+
+      showLeaderboard("global");
+    })();
   </script>
 </body>
 </html>
