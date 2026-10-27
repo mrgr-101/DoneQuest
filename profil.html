@@ -1,29 +1,239 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="style.css">
-<title>DoneQuest — Profil</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>DoneQuest — Profil</title>
 </head>
-<body data-page="profil">
-<nav id="nav"></nav>
-<main>
-  <section class="card full profile-head">
-    <div class="avatar lg">NP</div>
-    <div style="flex:1 1 260px"><h1>@namapengguna</h1><p class="mut" style="margin-top:4px">Level 12 — Explorer · Total 2.840 XP</p></div>
-    <div><div class="mut">Streak saat ini</div><div class="big">7 hari</div></div>
-  </section>
-  <div class="stats">
-    <div class="card"><div class="mut">Quest selesai</div><div class="big">128</div></div>
-    <div class="card"><div class="mut">XP minggu ini</div><div class="big">940</div></div>
-    <div class="card"><div class="mut">Tingkat penyelesaian</div><div class="big">82%</div></div>
-    <div class="card"><div class="mut">Streak terpanjang</div><div class="big">12 hari</div></div>
-  </div>
-  <section class="card full"><h2>XP per hari (7 hari terakhir)</h2><div class="chart" id="chart"></div></section>
-  <section class="card full"><h2>Koleksi achievement</h2><div class="ach-grid" id="ach-list"></div></section>
-</main>
-<script src="script.js"></script>
+<body class="min-h-screen bg-[#0f111a] text-[#e8e9ee] font-['Inter']" data-page="profil">
+
+  <!-- Header & Navigasi Utama -->
+  <header class="border-b border-[#23273a] bg-[#141726]/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="flex items-center justify-between px-6 py-4 lg:px-12">
+      <a href="index.html" class="text-2xl font-bold text-[#f5b83d]">DoneQuest</a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="index.html" class="text-[#a3a7b8] hover:text-white transition-colors">Dashboard</a>
+        <a href="quest.html" class="text-[#a3a7b8] hover:text-white transition-colors">Quest Saya</a>
+        <a href="leaderboard.html" class="text-[#a3a7b8] hover:text-white transition-colors">Leaderboard</a>
+        <a href="teman.html" class="text-[#a3a7b8] hover:text-white transition-colors">Teman</a>
+        <a href="profil.html" class="border-b-2 border-[#f5b83d] pb-1 font-semibold text-white">Profil</a>
+      </nav>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobileMenuBtn" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-[#131b2e] px-6 py-4 space-y-3 border-t border-[#23273a]">
+      <a href="index.html" class="block text-[#a3a7b8]">Dashboard</a>
+      <a href="quest.html" class="block text-[#a3a7b8]">Quest Saya</a>
+      <a href="leaderboard.html" class="block text-[#a3a7b8]">Leaderboard</a>
+      <a href="teman.html" class="block text-[#a3a7b8]">Teman</a>
+      <a href="profil.html" class="block text-[#f5b83d] font-semibold">Profil</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-6 py-10 space-y-6">
+
+    <!-- Card Head Profile -->
+    <section class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-5 w-full sm:w-auto">
+        <div id="avatar" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#f5b83d] text-[#1a1d2b] flex items-center justify-center font-bold text-2xl sm:text-3xl shrink-0">
+          NP
+        </div>
+        <div>
+          <h1 id="username" class="text-2xl sm:text-3xl font-bold text-white">@namapengguna</h1>
+          <p id="user-level" class="text-sm text-[#a3a7b8] mt-1">Level 12 — Explorer · Total 2.840 XP</p>
+        </div>
+      </div>
+      <div class="text-left sm:text-right w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-t-0 border-[#23273a]">
+        <div class="text-xs text-[#a3a7b8] uppercase tracking-wider">Streak saat ini</div>
+        <div id="current-streak" class="text-2xl sm:text-3xl font-bold text-[#f5b83d] mt-0.5">7 hari</div>
+      </div>
+    </section>
+
+    <!-- Stat Cards Grid -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-5">
+        <div class="text-xs text-[#a3a7b8]">Quest selesai</div>
+        <div id="stat-completed" class="text-2xl sm:text-3xl font-bold text-white mt-1">128</div>
+      </div>
+      <div class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-5">
+        <div class="text-xs text-[#a3a7b8]">XP minggu ini</div>
+        <div id="stat-weekly-xp" class="text-2xl sm:text-3xl font-bold text-[#f5b83d] mt-1">940</div>
+      </div>
+      <div class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-5">
+        <div class="text-xs text-[#a3a7b8]">Tingkat penyelesaian</div>
+        <div id="stat-rate" class="text-2xl sm:text-3xl font-bold text-white mt-1">82%</div>
+      </div>
+      <div class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-5">
+        <div class="text-xs text-[#a3a7b8]">Streak terpanjang</div>
+        <div id="stat-longest-streak" class="text-2xl sm:text-3xl font-bold text-white mt-1">12 hari</div>
+      </div>
+    </div>
+
+    <!-- Section Chart -->
+    <section class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-6 sm:p-8">
+      <h2 class="text-lg font-bold text-white mb-6">XP per hari (7 hari terakhir)</h2>
+      <div class="chart min-h-[200px] flex items-end justify-between gap-2 sm:gap-4 pt-6 px-2 border-b border-[#23273a]" id="chart">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- Section Achievement -->
+    <section class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-6 sm:p-8">
+      <h2 class="text-lg font-bold text-white mb-6">Koleksi achievement</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="ach-list">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Gabungan JavaScript Logic -->
+  <script>
+    (() => {
+      const STORAGE_KEY = "donequest-quests-v1";
+
+      // Data Achievement Default
+      const achievements = [
+        { id: 1, title: "7 Day Streak", desc: "Selesaikan quest 7 hari berturut-turut", icon: "🔥", unlocked: true },
+        { id: 2, title: "Early Bird", desc: "Selesaikan quest sebelum jam 8 pagi", icon: "🌅", unlocked: true },
+        { id: 3, title: "Quest Master", desc: "Selesaikan total 100 quest", icon: "🏆", unlocked: true },
+        { id: 4, title: "Fitness Enthusiast", desc: "Selesaikan 10 quest kategori Fitness", icon: "💪", unlocked: false },
+        { id: 5, title: "Scholar", desc: "Selesaikan 20 quest kategori Learning", icon: "📚", unlocked: false },
+        { id: 6, title: "Social Butterfly", desc: "Tambah 5 teman di DoneQuest", icon: "🤝", unlocked: false }
+      ];
+
+      // Data Aktivitas XP 7 Hari Terakhir (Dummy / Dynamic)
+      const weeklyXP = [
+        { day: "Sen", xp: 120 },
+        { day: "Sel", xp: 150 },
+        { day: "Rab", xp: 90 },
+        { day: "Kam", xp: 180 },
+        { day: "Jum", xp: 210 },
+        { day: "Sab", xp: 60 },
+        { day: "Min", xp: 130 }
+      ];
+
+      // Fungsi membaca data quest dari localStorage
+      function getStoredQuests() {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          return saved ? JSON.parse(saved) : [];
+        } catch {
+          return [];
+        }
+      }
+
+      // Render Grafik XP Per Hari
+      function renderChart() {
+        const chartContainer = document.getElementById("chart");
+        if (!chartContainer) return;
+
+        const maxXP = Math.max(...weeklyXP.map(item => item.xp), 1);
+        chartContainer.innerHTML = "";
+
+        weeklyXP.forEach(item => {
+          const heightPercent = Math.round((item.xp / maxXP) * 100);
+          
+          const barWrapper = document.createElement("div");
+          barWrapper.className = "flex-1 flex flex-col items-center gap-2 h-full justify-end";
+          
+          barWrapper.innerHTML = `
+            <span class="text-xs font-semibold text-[#f5b83d]">${item.xp}</span>
+            <div class="w-full max-w-[40px] bg-[#23273a] hover:bg-[#f5b83d]/20 rounded-t-lg transition-all duration-500 overflow-hidden flex items-end" style="height: ${heightPercent}%">
+              <div class="w-full bg-[#f5b83d] rounded-t-lg transition-all duration-500" style="height: 100%"></div>
+            </div>
+            <span class="text-xs text-[#a3a7b8] mt-2">${item.day}</span>
+          `;
+          
+          chartContainer.appendChild(barWrapper);
+        });
+      }
+
+      // Render Koleksi Achievement
+      function renderAchievements() {
+        const achContainer = document.getElementById("ach-list");
+        if (!achContainer) return;
+
+        achContainer.innerHTML = "";
+
+        achievements.forEach(ach => {
+          const card = document.createElement("div");
+          card.className = `p-4 rounded-xl border transition-all flex items-start gap-4 ${
+            ach.unlocked 
+              ? "bg-[#151826] border-[#23273a]" 
+              : "bg-[#141726]/40 border-[#23273a]/50 opacity-50"
+          }`;
+
+          card.innerHTML = `
+            <div class="text-3xl p-2.5 bg-[#23273a] rounded-xl shrink-0">${ach.icon}</div>
+            <div>
+              <h3 class="font-bold text-sm sm:text-base ${ach.unlocked ? "text-white" : "text-gray-400"}">${ach.title}</h3>
+              <p class="text-xs text-[#a3a7b8] mt-1">${ach.desc}</p>
+              <span class="inline-block mt-2 text-[10px] uppercase font-bold px-2 py-0.5 rounded ${
+                ach.unlocked ? "bg-[#f5b83d]/20 text-[#f5b83d]" : "bg-gray-800 text-gray-500"
+              }">
+                ${ach.unlocked ? "Terkunci" : "Belum Didapat"}
+              </span>
+            </div>
+          `;
+
+          achContainer.appendChild(card);
+        });
+      }
+
+      // Update Statistik Pengguna berdasarkan Quest
+      function updateStats() {
+        const quests = getStoredQuests();
+        const completedQuests = quests.filter(q => q.completed);
+        
+        // Update Quest Selesai jika ada data di localStorage
+        if (quests.length > 0) {
+          const statCompleted = document.getElementById("stat-completed");
+          if (statCompleted) {
+            statCompleted.textContent = completedQuests.length;
+          }
+
+          const statRate = document.getElementById("stat-rate");
+          if (statRate) {
+            const rate = Math.round((completedQuests.length / quests.length) * 100);
+            statRate.textContent = `${rate}%`;
+          }
+        }
+      }
+
+      // Event listener menu mobile
+      const mobileBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+      }
+
+      // Inisialisasi awal saat DOM siap
+      document.addEventListener("DOMContentLoaded", () => {
+        renderChart();
+        renderAchievements();
+        updateStats();
+      });
+
+      // Update real-time jika ada perubahan quest dari tab/halaman lain
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY) {
+          updateStats();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
