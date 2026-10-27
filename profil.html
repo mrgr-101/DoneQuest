@@ -114,7 +114,7 @@
         { id: 6, title: "Social Butterfly", desc: "Tambah 5 teman di DoneQuest", icon: "🤝", unlocked: false }
       ];
 
-      // Data Aktivitas XP 7 Hari Terakhir (Dummy / Dynamic)
+      // Data Aktivitas XP 7 Hari Terakhir
       const weeklyXP = [
         { day: "Sen", xp: 120 },
         { day: "Sel", xp: 150 },
@@ -184,7 +184,7 @@
               <span class="inline-block mt-2 text-[10px] uppercase font-bold px-2 py-0.5 rounded ${
                 ach.unlocked ? "bg-[#f5b83d]/20 text-[#f5b83d]" : "bg-gray-800 text-gray-500"
               }">
-                ${ach.unlocked ? "Terkunci" : "Belum Didapat"}
+                ${ach.unlocked ? "Terbuka" : "Terkunci"}
               </span>
             </div>
           `;
@@ -198,7 +198,6 @@
         const quests = getStoredQuests();
         const completedQuests = quests.filter(q => q.completed);
         
-        // Update Quest Selesai jika ada data di localStorage
         if (quests.length > 0) {
           const statCompleted = document.getElementById("stat-completed");
           if (statCompleted) {
