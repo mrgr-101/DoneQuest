@@ -5,63 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <title>Teman - DoneQuest</title>
+  <title>DoneQuest — Teman</title>
 </head>
-<body class="min-h-screen bg-[#0f111a] text-[#e8e9ee] font-['Inter']">
+<body class="min-h-screen bg-[#0b0f19] text-gray-200 font-['Inter']">
 
-  <header class="border-b border-[#23273a] bg-[#141726]/80 backdrop-blur-md sticky top-0 z-50">
-    <div class="flex items-center justify-between px-6 py-4 lg:px-12">
-      <a href="index.html" class="text-2xl font-bold text-[#f5b83d]">DoneQuest</a>
-
-      <nav class="hidden md:flex items-center space-x-8">
-        <a href="index.html" class="text-[#a3a7b8] hover:text-white transition-colors">Dashboard</a>
-        <a href="quest.html" class="text-[#a3a7b8] hover:text-white transition-colors">Quest Saya</a>
-        <a href="leaderboard.html" class="text-[#a3a7b8] hover:text-white transition-colors">Leaderboard</a>
-        <a href="teman.html" class="border-b-2 border-[#f5b83d] pb-1 font-semibold text-white">Teman</a>
-        <a href="profil.html" class="text-[#a3a7b8] hover:text-white transition-colors">Profil</a>
-      </nav>
-
-      <button id="mobileMenuBtn" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-      </button>
+  <!-- Header / Navigasi (Sama Persis dengan Dashboard) -->
+  <header class="border-b border-gray-800/60 bg-[#0f1523]/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-12">
+        <a href="index.html" class="text-xl font-bold tracking-tight text-amber-500 hover:text-amber-400 transition-colors">DoneQuest</a>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+          <a href="index.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Dashboard</a>
+          <a href="quest.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Quest Saya</a>
+          <a href="leaderboard.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Leaderboard</a>
+          <a href="teman.html" class="text-white relative py-5 border-b-2 border-amber-500">Teman</a>
+          <a href="profil.html" class="text-gray-400 hover:text-gray-200 transition-colors py-5 border-b-2 border-transparent">Profil</a>
+        </nav>
+      </div>
+      <button id="mobileMenuBtn" class="md:hidden text-gray-300 text-2xl" aria-label="Buka menu">☰</button>
     </div>
-
-    <div id="mobileMenu" class="hidden md:hidden bg-[#131b2e] px-6 py-4 space-y-3 border-t border-[#23273a]">
-      <a href="index.html" class="block text-[#a3a7b8]">Dashboard</a>
-      <a href="quest.html" class="block text-[#a3a7b8]">Quest Saya</a>
-      <a href="leaderboard.html" class="block text-[#a3a7b8]">Leaderboard</a>
-      <a href="teman.html" class="block text-[#f5b83d] font-semibold">Teman</a>
-      <a href="profil.html" class="block text-[#a3a7b8]">Profil</a>
-    </div>
+    <nav id="mobileMenu" class="hidden md:hidden bg-[#131b2e] border-b border-gray-800 px-6 py-4 space-y-3">
+      <a class="block text-gray-400" href="index.html">Dashboard</a>
+      <a class="block text-gray-400" href="quest.html">Quest Saya</a>
+      <a class="block text-gray-400" href="leaderboard.html">Leaderboard</a>
+      <a class="block text-amber-400 font-medium" href="teman.html">Teman</a>
+      <a class="block text-gray-400" href="profil.html">Profil</a>
+    </nav>
   </header>
 
-  <main class="grid grid-cols-1 items-start gap-6 px-6 py-10 lg:grid-cols-5 lg:px-12">
-
-    <section class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-7 lg:col-span-3">
-      <div class="flex items-baseline justify-between">
-        <h1 class="text-3xl font-bold text-white">Daftar Teman</h1>
-        <span id="jumlah-teman" class="text-[#a3a7b8]">0 teman</span>
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
+    
+    <!-- Kolom Kiri: Daftar Teman (3 Kolom) -->
+    <section class="lg:col-span-3 bg-[#192338] border border-gray-800/60 rounded-xl p-6 sm:p-7">
+      <div class="flex items-baseline justify-between border-b border-gray-800/60 pb-4">
+        <h1 class="text-xl sm:text-2xl font-bold text-gray-100">Daftar Teman</h1>
+        <span id="jumlah-teman" class="text-sm text-gray-400">0 teman</span>
       </div>
-      <input id="cari" oninput="render()" placeholder="Cari di daftar teman..." class="mt-6 w-full rounded-xl border border-[#2f3448] bg-[#141726] px-5 py-4 text-white placeholder:text-[#8a8ea0] focus:border-[#f5b83d] focus:outline-none transition-colors" />
+      <input id="cari" oninput="tampilTeman()" placeholder="Cari di daftar teman..." class="mt-6 w-full rounded-xl border border-gray-800 bg-[#0f1523] px-4 py-3 text-sm text-gray-200 placeholder:text-gray-500 focus:border-amber-500 focus:outline-none transition-colors" />
       <ul id="daftar-teman" class="mt-6 space-y-3"></ul>
     </section>
 
-    <div class="space-y-6 lg:col-span-2">
-
-      <section class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-6">
-        <h2 class="text-lg font-bold text-white">Tambah teman</h2>
-        <label for="username" class="mt-4 block text-sm text-[#a3a7b8]">Username</label>
+    <!-- Kolom Kanan: Sidebar Tambah & Permintaan (2 Kolom) -->
+    <div class="lg:col-span-2 space-y-6">
+      
+      <!-- Card Tambah Teman -->
+      <section class="bg-[#192338] border border-gray-800/60 rounded-xl p-6">
+        <h2 class="text-base font-bold text-gray-100">Tambah Teman</h2>
+        <label for="username" class="mt-4 block text-xs text-gray-400">Username</label>
         <div class="mt-2 flex gap-3">
-          <input id="username" placeholder="Cari username..." class="min-w-0 flex-1 rounded-xl border border-[#2f3448] bg-[#141726] px-5 py-3.5 text-white placeholder:text-[#8a8ea0] focus:border-[#f5b83d] focus:outline-none transition-colors" />
-          <button onclick="kirim()" class="cursor-pointer rounded-xl bg-[#f5b83d] hover:bg-[#e0a430] px-8 font-bold text-[#1a1d2b] transition-colors">Kirim</button>
+          <input id="username" placeholder="Cari username..." class="min-w-0 flex-1 rounded-xl border border-gray-800 bg-[#0f1523] px-4 py-2.5 text-sm text-gray-200 placeholder:text-gray-500 focus:border-amber-500 focus:outline-none transition-colors" />
+          <button onclick="kirim()" class="cursor-pointer rounded-xl bg-amber-500 hover:bg-amber-400 px-6 text-sm font-bold text-[#0b0f19] transition-colors">Kirim</button>
         </div>
-        <p id="pesan" class="mt-3 text-sm font-medium"></p>
+        <p id="pesan" class="mt-3 text-xs font-medium"></p>
       </section>
 
-      <section class="rounded-2xl border border-[#23273a] bg-[#1a1d2b] p-6">
-        <h2 id="judul-permintaan" class="text-lg font-bold text-white">Permintaan pertemanan</h2>
+      <!-- Card Permintaan Pertemanan -->
+      <section class="bg-[#192338] border border-gray-800/60 rounded-xl p-6">
+        <h2 id="judul-permintaan" class="text-base font-bold text-gray-100">Permintaan Pertemanan</h2>
         <ul id="daftar-permintaan" class="mt-4 space-y-3"></ul>
       </section>
 
@@ -69,107 +70,147 @@
   </main>
 
   <script>
-    const $ = (id) => document.getElementById(id);
-    const esc = (s) => String(s).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
-    const load = (key, awal) => JSON.parse(localStorage.getItem(key)) || awal;
+    (() => {
+      const INITIAL_FRIENDS = [
+        { nama: "user_empat", inisial: "BT", info: "Level 14 — Explorer · Streak 5 hari", xp: "342.000 XP" },
+        { nama: "user_lima", inisial: "RS", info: "Level 12 — Explorer · Streak 3 hari", xp: "210.000 XP" },
+        { nama: "user_enam", inisial: "LF", info: "Level 8 — Adventurer · Streak 2 hari", xp: "1.905 XP" },
+        { nama: "user_tujuh", inisial: "MH", info: "Level 7 — Adventurer · Streak 9 hari", xp: "112.000 XP" },
+        { nama: "user_delapan", inisial: "DP", info: "Level 5 — Newbie · Streak 1 hari", xp: "6.400 XP" },
+        { nama: "user_sembilan", inisial: "ZK", info: "Level 3 — Newbie · Streak 0 hari", xp: "310 XP" }
+      ];
 
-    let teman = load("donequest_friends", [
-      { nama: "user_empat", inisial: "BT", info: "Level 14 — Explorer · Streak 5 hari", xp: "342.000 XP" },
-      { nama: "user_lima", inisial: "RS", info: "Level 12 — Explorer · Streak 3 hari", xp: "210.000 XP" },
-      { nama: "user_enam", inisial: "LF", info: "Level 8 — Adventurer · Streak 2 hari", xp: "1.905 XP" },
-      { nama: "user_tujuh", inisial: "MH", info: "Level 7 — Adventurer · Streak 9 hari", xp: "112.000 XP" },
-      { nama: "user_delapan", inisial: "DP", info: "Level 5 — Newbie · Streak 1 hari", xp: "6.400 XP" },
-      { nama: "user_sembilan", inisial: "ZK", info: "Level 3 — Newbie · Streak 0 hari", xp: "310 XP" }
-    ]);
+      const INITIAL_REQUESTS = [
+        { nama: "Daffa", inisial: "DF" },
+        { nama: "Randa", inisial: "RD" }
+      ];
 
-    let permintaan = load("donequest_requests", [
-      { nama: "Daffa", inisial: "DF" },
-      { nama: "Randa", inisial: "RD" }
-    ]);
+      let teman = JSON.parse(localStorage.getItem("donequest_friends")) || INITIAL_FRIENDS;
+      let permintaan = JSON.parse(localStorage.getItem("donequest_requests")) || INITIAL_REQUESTS;
 
-    const itemTeman = (t) => `
-      <li class="flex items-center gap-4 rounded-xl border border-[#23273a] bg-[#151826] px-6 py-5">
-        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#2a2e44] text-sm font-bold text-white">${esc(t.inisial)}</div>
-        <div class="flex-1 min-w-0">
-          <p class="font-bold text-white truncate">@${esc(t.nama)}</p>
-          <p class="text-sm text-[#a3a7b8] truncate">${esc(t.info)}</p>
-        </div>
-        <div class="text-right shrink-0">
-          <p class="font-bold text-[#f5b83d]">${esc(t.xp)}</p>
-          <div class="mt-1 flex items-center justify-end gap-3 text-sm">
-            <a href="#" class="text-[#f5b83d] hover:underline">Lihat profil</a>
-            <button data-aksi="hapus" data-nama="${esc(t.nama)}" class="cursor-pointer text-[#a3a7b8] hover:text-red-400 transition-colors">Hapus</button>
-          </div>
-        </div>
-      </li>`;
-
-    const itemPermintaan = (p) => `
-      <li class="rounded-xl border border-[#23273a] bg-[#151826] p-4">
-        <div class="flex items-center gap-3">
-          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#2a2e44] text-sm font-bold text-white">${esc(p.inisial)}</div>
-          <div class="min-w-0">
-            <p class="text-white font-semibold truncate">@${esc(p.nama)}</p>
-            <p class="text-sm text-[#a3a7b8]">Menunggu respons</p>
-          </div>
-        </div>
-        <div class="mt-3 flex gap-3">
-          <button data-aksi="terima" data-nama="${esc(p.nama)}" class="flex-1 cursor-pointer rounded-xl bg-[#f5b83d] hover:bg-[#e0a430] py-2.5 text-center font-bold text-[#1a1d2b] transition-colors">Terima</button>
-          <button data-aksi="tolak" data-nama="${esc(p.nama)}" class="flex-1 cursor-pointer rounded-xl border border-[#2f3448] hover:bg-[#23273a] py-2.5 text-center font-semibold text-white transition-colors">Tolak</button>
-        </div>
-      </li>`;
-
-    function render() {
-      const kata = $("cari").value.toLowerCase();
-      const hasil = teman.filter((t) => t.nama.toLowerCase().includes(kata));
-
-      $("daftar-teman").innerHTML = hasil.length
-        ? hasil.map(itemTeman).join("")
-        : `<li class="p-6 text-center text-sm text-[#a3a7b8] border border-dashed border-[#23273a] rounded-xl">Teman tidak ditemukan.</li>`;
-      $("jumlah-teman").textContent = `${teman.length} teman`;
-
-      $("daftar-permintaan").innerHTML = permintaan.length
-        ? permintaan.map(itemPermintaan).join("")
-        : `<li class="p-4 text-center text-sm text-[#a3a7b8]">Tidak ada permintaan pertemanan.</li>`;
-      $("judul-permintaan").textContent = `Permintaan pertemanan (${permintaan.length})`;
-    }
-
-    function update() {
-      localStorage.setItem("donequest_friends", JSON.stringify(teman));
-      localStorage.setItem("donequest_requests", JSON.stringify(permintaan));
-      render();
-    }
-
-    document.addEventListener("click", (e) => {
-      const { aksi, nama } = e.target.dataset;
-      if (!aksi) return;
-
-      if (aksi === "hapus") {
-        if (!confirm(`Apakah kamu yakin ingin menghapus @${nama} dari daftar teman?`)) return;
-        teman = teman.filter((t) => t.nama !== nama);
-      } else {
-        const p = permintaan.find((x) => x.nama === nama);
-        if (aksi === "terima") {
-          teman.unshift({ nama, inisial: p.inisial, info: "Level 1 — Newbie · Streak 0 hari", xp: "0 XP" });
-        }
-        permintaan = permintaan.filter((x) => x.nama !== nama);
+      function saveState() {
+        localStorage.setItem("donequest_friends", JSON.stringify(teman));
+        localStorage.setItem("donequest_requests", JSON.stringify(permintaan));
       }
-      update();
-    });
 
-    function kirim() {
-      const nama = $("username").value.trim();
-      const ok = nama !== "";
+      function safeText(str) {
+        return String(str).replace(/[&<>"']/g, ch => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        }[ch]));
+      }
 
-      $("pesan").className = "mt-3 text-sm font-medium " + (ok ? "text-emerald-400" : "text-red-400");
-      $("pesan").textContent = ok
-        ? `Permintaan pertemanan berhasil dikirim ke @${nama}.`
-        : "Isi username terlebih dahulu.";
-      if (ok) $("username").value = "";
-    }
+      window.tampilTeman = function() {
+        const kata = document.getElementById("cari").value.toLowerCase();
+        let daftar = "";
+        
+        const filtered = teman.filter(t => t.nama.toLowerCase().includes(kata));
+        
+        if (filtered.length === 0) {
+          daftar = `<li class="p-6 text-center text-xs text-gray-400 border border-dashed border-gray-800 rounded-xl">Teman tidak ditemukan.</li>`;
+        } else {
+          for (const t of filtered) {
+            daftar += `
+              <li class="flex items-center gap-4 rounded-xl border border-gray-800/60 bg-[#0f1523] px-5 py-4">
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500">${safeText(t.inisial)}</div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-sm text-gray-200 truncate">@${safeText(t.nama)}</p>
+                  <p class="text-xs text-gray-400 truncate mt-0.5">${safeText(t.info)}</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <p class="font-bold text-sm text-amber-500">${safeText(t.xp)}</p>
+                  <div class="mt-1 flex items-center justify-end gap-3 text-xs">
+                    <a href="#" class="text-amber-500 hover:underline">Profil</a>
+                    <button onclick="hapus('${safeText(t.nama)}')" class="cursor-pointer text-gray-400 hover:text-red-400 transition-colors">Hapus</button>
+                  </div>
+                </div>
+              </li>`;
+          }
+        }
+        
+        document.getElementById("daftar-teman").innerHTML = daftar;
+        document.getElementById("jumlah-teman").textContent = teman.length + " teman";
+      };
 
-    $("mobileMenuBtn").onclick = () => $("mobileMenu").classList.toggle("hidden");
+      function tampilPermintaan() {
+        let masuk = "";
+        if (permintaan.length === 0) {
+          masuk = `<li class="p-4 text-center text-xs text-gray-400 border border-dashed border-gray-800 rounded-xl">Tidak ada permintaan pertemanan.</li>`;
+        } else {
+          for (const p of permintaan) {
+            masuk += `
+              <li class="rounded-xl border border-gray-800/60 bg-[#0f1523] p-4">
+                <div class="flex items-center gap-3">
+                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1e2b45] text-xs font-bold text-amber-500">${safeText(p.inisial)}</div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-semibold text-gray-200 truncate">@${safeText(p.nama)}</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Menunggu respons</p>
+                  </div>
+                </div>
+                <div class="mt-3 flex gap-2">
+                  <button onclick="terima('${safeText(p.nama)}')" class="flex-1 cursor-pointer rounded-xl bg-amber-500 hover:bg-amber-400 py-2 text-center text-xs font-bold text-[#0b0f19] transition-colors">Terima</button>
+                  <button onclick="tolak('${safeText(p.nama)}')" class="flex-1 cursor-pointer rounded-xl border border-gray-800 hover:bg-gray-800/50 py-2 text-center text-xs font-semibold text-gray-300 transition-colors">Tolak</button>
+                </div>
+              </li>`;
+          }
+        }
+        document.getElementById("daftar-permintaan").innerHTML = masuk;
+        document.getElementById("judul-permintaan").textContent = "Permintaan Pertemanan (" + permintaan.length + ")";
+      }
 
-    render();
+      window.hapus = function(nama) {
+        if (confirm(`Hapus @${nama} dari daftar teman?`)) {
+          teman = teman.filter(t => t.nama !== nama);
+          saveState();
+          tampilTeman();
+        }
+      };
+
+      window.tolak = function(nama) {
+        permintaan = permintaan.filter(p => p.nama !== nama);
+        saveState();
+        tampilPermintaan();
+      };
+
+      window.terima = function(nama) {
+        const p = permintaan.find(item => item.nama === nama);
+        if (p) {
+          teman.unshift({
+            nama: p.nama,
+            inisial: p.inisial,
+            info: "Level 1 — Newbie · Streak 0 hari",
+            xp: "0 XP"
+          });
+          tolak(nama);
+          saveState();
+          tampilTeman();
+        }
+      };
+
+      window.kirim = function() {
+        const input = document.getElementById("username");
+        const pesan = document.getElementById("pesan");
+        const nama = input.value.trim();
+
+        if (!nama) {
+          pesan.className = "mt-3 text-xs font-medium text-red-400";
+          pesan.textContent = "Isi username terlebih dahulu.";
+          return;
+        }
+
+        pesan.className = "mt-3 text-xs font-medium text-emerald-400";
+        pesan.textContent = "Permintaan dikirim ke @" + nama + ".";
+        input.value = "";
+      };
+
+      const mobileBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+      }
+
+      tampilTeman();
+      tampilPermintaan();
+    })();
   </script>
 </body>
 </html>
